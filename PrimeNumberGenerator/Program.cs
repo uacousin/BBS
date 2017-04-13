@@ -10,7 +10,7 @@ namespace PrimeNumberGenerator
 
 
             GostGenerator gostgenerator = new GostGenerator();
-            gostgenerator.Generate(32);
+            gostgenerator.Generate(1024);
             Console.WriteLine("Done, p = {0}", gostgenerator.p);
             
             

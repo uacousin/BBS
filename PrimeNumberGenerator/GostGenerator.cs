@@ -52,17 +52,18 @@ namespace PrimeNumberGenerator
                 while (true)
                 {
                     GenerateYArray(rm, y0); //6th step
-                    BigInteger Ym = new BigInteger(0);
+                    BigInteger Ym ;
 
                     for (int i = 0; i < rm - 1; i++)
                     {
                         Ym += yArray[i];
                     }
-                    Ym = BigInteger.Multiply(Ym, BigInteger.Pow(2, 161)); // 7th step
+                    Ym = BigInteger.Multiply(Ym, 1); // 7th step
                     y0 = yArray[rm];
                     yArray[0] = yArray[rm - 1]; //8th step
-                    N = new BigInteger();
-                    N = BigInteger.Pow(2, tArray[m] - 1) / pArray[m + 1] + 1 + BigInteger.Pow(2, tArray[m] - 1) * Ym / pArray[m + 1];
+                    var temp = BigInteger.Pow(2, tArray[m] - 1) / pArray[m + 1];
+                    var temp2 = BigInteger.Pow(2, tArray[m] - 1) * Ym / (pArray[m + 1] * BigInteger.Pow(2,16*rm));
+                    N =  temp+ temp2 +1 ;
                     if (N % 2 == 1)
                         N++;
                     k = 0; // 10th step 
@@ -102,7 +103,7 @@ namespace PrimeNumberGenerator
         private BigInteger NextYForLittle(BigInteger y)
         {
 
-            return BigInteger.ModPow(19381 * y + c, 1, 2 ^ 16);
+            return BigInteger.ModPow(BigInteger.Multiply(19381,y) + c, 1, BigInteger.Pow(2,16));
 
         }
         private void GenerateYArray (int rm, BigInteger y0)
