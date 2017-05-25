@@ -39,7 +39,7 @@ namespace PrimeNumberGenerator
                 c--;
             x0 = BigIntegerExtentions.GenerateBigIntByBitLength(16);
             BigInteger y0 = x0;
-            yArray.Add(x0); //First step
+            //yArray.Add(x0); //First step
             InitTArray(capacity); //Second step
             BigInteger[] pArray = new BigInteger[s + 1];
             pArray[s] = 65537; // Third step

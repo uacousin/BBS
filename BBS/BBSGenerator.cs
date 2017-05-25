@@ -11,21 +11,33 @@ namespace BBS
         public BigInteger r;
         public BBSGenerator()
         { // D5BBB96D30086EC484EBA3D7F9CAEB07
+
             p = BigInteger.Parse("0D5BBB96D30086EC484EBA3D7F9CAEB07", System.Globalization.NumberStyles.AllowHexSpecifier);
             q = BigInteger.Parse("0425D2B9BFDB25B9CF6C416CC6E37B59C1F", System.Globalization.NumberStyles.HexNumber);
             
             n = p * q;
+
+            int nLength = n.ToBinaryString().Length;
             Random gen = new Random();
-            r = BigInteger.Parse(gen.Next(2, Int32.MaxValue).ToString());
+
+            
+            r = BigIntegerExtentions.GenerateBigIntByBitLength(nLength);
+            while (BigInteger.GreatestCommonDivisor(r, n)!=1)
+            {
+                r = BigIntegerExtentions.GenerateBigIntByBitLength(nLength);
+            }
+            Console.WriteLine(r);
+            
+            
+
         }
-        public BigInteger Next()
+        public void Next()
         {
-            r = BigInteger.ModPow(r, 2, n);
-            return r;
+            r = BigInteger.ModPow(r, 2, n);           
         }
         public byte Next_bit()
-        {
-            return (byte)(r % 2);
+        {            
+            return (byte)(r%2);
         }
         public byte Next_byte()
         {
@@ -35,8 +47,8 @@ namespace BBS
         {
             byte[] res = new byte[n];
             for (int i = 0; i < n; i++)
-            {
-                this.Next();
+            {                
+                Next();
                 res[i] = Next_byte();
             }
             return res;
@@ -47,9 +59,10 @@ namespace BBS
             byte[] res = new byte[n];
             for (int i = 0; i < n; i++)
             {
-                this.Next();
+                
+                Next();
                 res[i] = Next_bit();
-                //Console.WriteLine(i);
+              
 
             }
             return res;

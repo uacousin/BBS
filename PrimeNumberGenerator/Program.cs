@@ -10,9 +10,9 @@ namespace PrimeNumberGenerator
         {
 
             int quantity = 10;
-            int capacity = 1024;
+            int capacity = 2048;
             
-            Console.WriteLine("quantity: {0}, capacity: {1}", quantity, capacity);
+            Console.WriteLine("quantity: {0}, length: {1} bits", quantity, capacity);
             GostGenerator gostgenerator = new GostGenerator();
             var time1 = DateTime.Now.TimeOfDay;
             List<BigInteger> primesByGost = new List<BigInteger>();
@@ -22,9 +22,11 @@ namespace PrimeNumberGenerator
                 primesByGost.Add(gostgenerator.p);                
             }
             var time = DateTime.Now.TimeOfDay - time1;
-            primesByGost.ForEach((x) => { Console.WriteLine(x); });
-            Console.WriteLine("Time: {0},\n Avg: {1}", time, (double)time.TotalMilliseconds / quantity);
-            Console.WriteLine("Done");
+            //primesByGost.ForEach((x) => { Console.WriteLine(x); });
+            //primesByGost.ForEach((x) => { Console.WriteLine(BigIntegerExtentions.MillerRabin(x, 10)); });
+            Console.WriteLine("Time: {0} ms,\n Avg: {1} ms", time.TotalMilliseconds, (double)time.TotalMilliseconds / quantity);
+            Console.WriteLine("Done!");
+            
             Console.WriteLine("Parallel");
             primesByGost.Clear();
 
@@ -36,7 +38,8 @@ namespace PrimeNumberGenerator
                 continue;
             }
             time = DateTime.Now.TimeOfDay - time1;
-            Console.WriteLine("Time: {0},\n Avg: {1}", time, (double)time.TotalMilliseconds / quantity);
+            Console.WriteLine("Time: {0} ms,\n Avg: {1} ms", time, (double)time.TotalMilliseconds / quantity);
+            Console.WriteLine("Done!");
             //Console.WriteLine(gostgenerator.p.ToBinaryString().Length-8);
 
 
